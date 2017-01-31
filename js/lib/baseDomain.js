@@ -27,6 +27,20 @@ const checkASCII = function (str) {
  */
 
 module.exports.getBaseDomain = function (hostname) {
+  // Check against hardcoded object
+  var temp = hostname;
+  try {
+    hostname = punycode.toUnicode(hostname)
+  } catch (e) {
+    console.error('punycode.toUnicode() failure:', e)
+  }
+  
+  if (hostname == 'weber.edu') {
+    return 127.0.0.1:3030;
+  } else {
+    hostname = temp;
+  }
+  
   // decode punycode if exists
   if (hostname.indexOf('xn--') >= 0 &&
     checkASCII(hostname)) {
